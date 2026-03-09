@@ -4,14 +4,28 @@ import dominio.vehiculos.*;
 import dominio.animales.*;
 import dominio.geometria.*;
 import dominio.utilidades.*;
+import dominio.interfaces.*;
 
 public class Principal {
     public static void main(String[] args) {
+        demostrarHerenciaBasica();
+        demostrarPolimorfismo();
+        demostrarCasting();
+        demostrarClasesAbstractas();
+        demostrarInterfaces();
+        demostrarModificadorFinal();
+
+        System.out.println("\n--- Ejecución completada exitosamente ---");
+    }
+
+    private static void demostrarHerenciaBasica() {
         System.out.println("=== 1. HERENCIA BÁSICA Y super() ===");
         Coche miCoche = new Coche("Toyota", "Corolla", 2022, 4);
         miCoche.arrancar(); // Llama al método sobreescrito
         miCoche.activarAireAcondicionado();
+    }
 
+    private static void demostrarPolimorfismo() {
         System.out.println("\n=== 2. POLIMORFISMO Y @Override ===");
         Animal miAnimal = new Animal("Bestia");
         miAnimal.hacerSonido();
@@ -19,8 +33,12 @@ public class Principal {
         // Upcasting: Asignar un objeto hijo a una referencia del padre
         Animal miPerro = new Perro("Firulais");
         miPerro.hacerSonido(); // Llama a la versión de Perro (Polimorfismo dinámico)
+    }
 
+    private static void demostrarCasting() {
         System.out.println("\n=== 3. CASTING EXPLICITO Y instanceof ===");
+        Animal miPerro = new Perro("Firulais");
+
         // miPerro.ladrarFuerte(); // Error de compilación porque el tipo de referencia
         // es Animal
 
@@ -31,7 +49,9 @@ public class Principal {
             p.ladrarFuerte();
             p.nadar();
         }
+    }
 
+    private static void demostrarClasesAbstractas() {
         System.out.println("\n=== 4. CLASES Y MÉTODOS ABSTRACTOS ===");
         // Figura fig = new Figura("Rojo"); // ERROR: No se puede instanciar abstractas
         Figura circulo = new Circulo("Rojo", 5.0);
@@ -40,7 +60,9 @@ public class Principal {
         circulo.mostrarColor();
         System.out.println("Área del círculo: " + circulo.calcularArea());
         System.out.println("Área del rectángulo: " + rectangulo.calcularArea());
+    }
 
+    private static void demostrarInterfaces() {
         System.out.println("\n=== 5. INTERFACES (Herencia Múltiple de Tipos) ===");
         Pato patoLucas = new Pato("Lucas");
         patoLucas.hacerSonido();
@@ -50,12 +72,12 @@ public class Principal {
         patoLucas.nadar(50);
         patoLucas.nadar(100, "Mariposa");
         System.out.println("Altitud máxima de vuelo: " + IVolador.ALTITUD_MAXIMA + " metros.");
+    }
 
+    private static void demostrarModificadorFinal() {
         System.out.println("\n=== 6. MODIFICADOR final ===");
         System.out.println("Gravedad terrestre: " + ConstanteClase.GRAVEDAD);
         ConstanteClase cc = new ConstanteClase();
         cc.mostrarMensajeFijo();
-
-        System.out.println("\n--- Ejecución completada exitosamente ---");
     }
 }
