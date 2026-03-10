@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UML Tradicional v3.0 - Herencia_POO</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { color: #1a1a1a; margin-bottom: 50px; }
+
+        .canvas {
+            position: relative;
+            width: 1400px;
+            height: 1000px;
+            background: white;
+            border: 2px solid #ccc;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* UML Class Notation */
+        .uml-class {
+            position: absolute;
+            border: 1.5px solid #000;
+            background: #fffdf2;
+            min-width: 220px;
+            font-size: 13px;
+        }
+
+        .uml-class .title {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            border-bottom: 1.5px solid #000;
+            background-color: #fff4cc;
+        }
+
+        .uml-class .section {
+            padding: 8px 12px;
+            border-bottom: 1.5px solid #000;
+            min-height: 20px;
+        }
+
+        .uml-class .section:last-child {
+            border-bottom: none;
+        }
+
+        .abstract .title { font-style: italic; }
+        .interface .title::before { 
+            content: "«interface»"; 
+            display: block; 
+            font-size: 10px; 
+            font-weight: normal; 
+            margin-bottom: 2px;
+        }
+
+        /* SVG Connections */
+        svg { position: absolute; width:100%; height:100%; top:0; left:0; pointer-events:none; }
+
+        /* Coordinate Assignments */
+        #animal { top: 40px; left: 580px; }
+        #perro { top: 280px; left: 450px; }
+        #pato { top: 280px; left: 720px; }
+        #inadador { top: 280px; left: 150px; }
+        #ivolador { top: 280px; left: 1000px; }
+
+        #vehiculo { top: 550px; left: 300px; }
+        #coche { top: 780px; left: 300px; }
+
+        #figura { top: 550px; left: 850px; }
+        #circulo { top: 780px; left: 720px; }
+        #rectangulo { top: 780px; left: 980px; }
+
+        #util { top: 800px; left: 30px; }
+
+        .label { font-size: 11px; color: #555; }
+    </style>
+</head>
+<body>
+
+    <h1>Diagrama de Clases UML Completo (Atributos y Métodos)</h1>
+
+    <div class="canvas">
+        <svg>
+            <defs>
+                <marker id="arrow" viewBox="0 0 12 12" refX="12" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+                    <path d="M 0 0 L 12 6 L 0 12 z" fill="white" stroke="black"/>
+                </marker>
+            </defs>
+
+            <!-- Herencia Animal -->
+            <polyline points="560,280 560,240 690,240 690,140" fill="none" stroke="black" marker-end="url(#arrow)"/> <!-- Perro -->
+            <polyline points="830,280 830,240 690,240 690,140" fill="none" stroke="black" marker-end="url(#arrow)"/> <!-- Pato -->
+
+            <!-- Implementaciones -->
+            <polyline points="450,350 370,350" fill="none" stroke="black" stroke-dasharray="5,5" marker-end="url(#arrow)"/> <!-- Perro -> INadador -->
+            <polyline points="720,380 370,380 370,360" fill="none" stroke="black" stroke-dasharray="5,5" marker-end="url(#arrow)"/> <!-- Pato -> INadador -->
+            <polyline points="940,350 1000,350" fill="none" stroke="black" stroke-dasharray="5,5" marker-end="url(#arrow)"/> <!-- Pato -> IVolador -->
+
+            <!-- Vehiculo -->
+            <line x1="410" y1="780" x2="410" y2="720" stroke="black" marker-end="url(#arrow)"/>
+
+            <!-- Geometria -->
+            <polyline points="830,780 830,740 960,740 960,670" fill="none" stroke="black" marker-end="url(#arrow)"/>
+            <polyline points="1090,780 1090,740 960,740 960,670" fill="none" stroke="black" marker-end="url(#arrow)"/>
+        </svg>
+
+        <!-- DOMINIO ANIMALES -->
+        <div class="uml-class abstract" id="animal">
+            <div class="title">Animal</div>
+            <div class="section"># nombre: String</div>
+            <div class="section">+ Animal(nombre: String)<br>+ hacerSonido()<br>+ dormir()</div>
+        </div>
+
+        <div class="uml-class" id="perro">
+            <div class="title">Perro</div>
+            <div class="section"></div>
+            <div class="section">+ Perro(nombre: String)<br>+ hacerSonido()<br>+ ladrarFuerte()<br>+ nadar()<br>+ nadar(dist: int)<br>+ nadar(dist: int, estilo: String)</div>
+        </div>
+
+        <div class="uml-class" id="pato">
+            <div class="title">Pato</div>
+            <div class="section"></div>
+            <div class="section">+ Pato(nombre: String)<br>+ hacerSonido()<br>+ volar()<br>+ nadar()<br>+ nadar(dist: int)<br>+ nadar(dist: int, estilo: String)</div>
+        </div>
+
+        <div class="uml-class interface" id="inadador">
+            <div class="title">INadador</div>
+            <div class="section"></div>
+            <div class="section">+ nadar()<br>+ nadar(dist: int)<br>+ nadar(dist: int, est: String)</div>
+        </div>
+
+        <div class="uml-class interface" id="ivolador">
+            <div class="title">IVolador</div>
+            <div class="section">+ ALTITUD_MAXIMA: int</div>
+            <div class="section">+ volar()<br>+ aterrizar() «default»</div>
+        </div>
+
+        <!-- DOMINIO VEHICULOS -->
+        <div class="uml-class" id="vehiculo">
+            <div class="title">Vehiculo</div>
+            <div class="section"># marca: String<br># modelo: String<br>- ano: int</div>
+            <div class="section">+ Vehiculo()<br>+ Vehiculo(m, mod, a)<br>+ arrancar()<br>+ getAno(): int<br>+ setAno(a: int)</div>
+        </div>
+
+        <div class="uml-class" id="coche">
+            <div class="title">Coche</div>
+            <div class="section">- numeroPuertas: int</div>
+            <div class="section">+ Coche(m, mod, a, p)<br>+ arrancar()<br>+ activarAireAcondicionado()</div>
+        </div>
+
+        <!-- DOMINIO GEOMETRIA -->
+        <div class="uml-class abstract" id="figura">
+            <div class="title">Figura</div>
+            <div class="section"># color: String</div>
+            <div class="section">+ Figura(color: String)<br>+ calcularArea()*: double<br>+ mostrarColor()</div>
+        </div>
+
+        <div class="uml-class" id="circulo">
+            <div class="title">Circulo</div>
+            <div class="section">- radio: double</div>
+            <div class="section">+ Circulo(c, r)<br>+ calcularArea(): double</div>
+        </div>
+
+        <div class="uml-class" id="rectangulo">
+            <div class="title">Rectangulo</div>
+            <div class="section">- base: double<br>- altura: double</div>
+            <div class="section">+ Rectangulo(c, b, a)<br>+ calcularArea(): double</div>
+        </div>
+
+        <!-- UTILIDADES -->
+        <div class="uml-class" id="util">
+            <div class="title">ConstanteClase «final»</div>
+            <div class="section">+ «static» GRAVEDAD: double</div>
+            <div class="section">+ «final» mostrarMensajeFijo()</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px; font-size: 13px; color: #666;">
+        Nota: + (public), # (protected), - (private), * (abstract), «static» (final/constante).
+    </div>
+
+</body>
+</html>

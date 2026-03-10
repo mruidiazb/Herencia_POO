@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecosistema Arquitectónico - Herencia_POO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --surface: rgba(17, 24, 39, 0.8);
+            --primary: #818cf8;
+            --secondary: #f472b6;
+            --accent: #2dd4bf;
+            --text: #f3f4f6;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 40px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(244, 114, 182, 0.1) 0, transparent 50%);
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 60px; }
+        header h1 { font-size: 3.5rem; margin: 0; letter-spacing: -2px; font-weight: 800; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .tabs { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; }
+        .tab-btn { background: var(--glass); border: 1px solid var(--border); padding: 12px 30px; border-radius: 99px; color: #9ca3af; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 0 20px rgba(129, 140, 248, 0.4); }
+
+        .content { display: none; animation: slideUp 0.5s ease-out; }
+        .content.active { display: block; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Class Cards Styling */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .class-card { background: var(--surface); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 20px; padding: 25px; transition: 0.3s; position: relative; overflow: hidden; }
+        .class-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary); }
+        .class-card.abstract::before { background: var(--secondary); background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255,255,255,0.2) 5px, rgba(255,255,255,0.2) 10px); }
+        .class-card.interface::before { background: var(--accent); }
+
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-header h3 { margin: 0; font-size: 1.4rem; color: #fff; }
+        .type-tag { font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,0.05); color: #9ca3af; }
+
+        .section-label { font-size: 0.65rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin: 15px 0 8px 0; font-weight: 800; }
+        .members { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #d1d5db; line-height: 1.6; }
+
+        /* Sequence Styling */
+        .seq-container { background: var(--surface); border-radius: 30px; padding: 50px; border: 1px solid var(--border); }
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--primary), var(--secondary)); opacity: 0.3; }
+        
+        .event { margin-bottom: 30px; position: relative; }
+        .event::before { content: ''; position: absolute; left: -34px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+        .event b { color: var(--primary); }
+        .event code { background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; color: var(--secondary); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Blueprint Herencia_POO</h1>
+            <p style="color:#9ca3af">Visualización detallada de Clases y Procesos</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('clases')">DIAGRAMA DE CLASES</button>
+            <button class="tab-btn" onclick="switchTab('secuencia')">FLUJO DE SECUENCIA</button>
+        </div>
+
+        <div id="clases" class="content active">
+            <div class="grid">
+                <!-- ANIMAL -->
+                <div class="class-card abstract">
+                    <div class="card-header"><h3>Animal</h3> <span class="type-tag">ABSTRACT</span></div>
+                    <div class="section-label">Atributos</div>
+                    <div class="members"># String nombre</div>
+                    <div class="section-label">Métodos</div>
+                    <div class="members">
+                        + Animal(nombre)<br>
+                        + hacerSonido() [virtual]<br>
+                        + dormir()
+                    </div>
+                </div>
+
+                <!-- PERRO -->
+                <div class="class-card">
+                    <div class="card-header"><h3>Perro</h3> <span class="type-tag">EXTENDS Animal</span></div>
+                    <div class="section-label">Interfaces</div>
+                    <div class="members">implements INadador</div>
+                    <div class="section-label">Métodos Sobrescritos</div>
+                    <div class="members">+ hacerSonido()<br>+ nadar()</div>
+                    <div class="section-label">Propios</div>
+                    <div class="members">+ ladrarFuerte()</div>
+                </div>
+
+                <!-- PATO -->
+                <div class="class-card">
+                    <div class="card-header"><h3>Pato</h3> <span class="type-tag">EXTENDS Animal</span></div>
+                    <div class="section-label">Interfaces</div>
+                    <div class="members">implements IVolador, INadador</div>
+                    <div class="section-label">Métodos</div>
+                    <div class="members">+ volar()<br>+ nadar()<br>+ nadar(distancia)</div>
+                </div>
+
+                <!-- VEHICULO -->
+                <div class="class-card">
+                    <div class="card-header"><h3>Vehiculo</h3></div>
+                    <div class="section-label">Atributos</div>
+                    <div class="members"># String marca, modelo<br>- int ano</div>
+                    <div class="section-label">Métodos</div>
+                    <div class="members">+ arrancar()<br>+ getAno() / setAno()</div>
+                </div>
+
+                <!-- FIGURA -->
+                <div class="class-card abstract">
+                    <div class="card-header"><h3>Figura</h3> <span class="type-tag">ABSTRACT</span></div>
+                    <div class="section-label">Atributos</div>
+                    <div class="members"># String color</div>
+                    <div class="section-label">Métodos Obligatorios</div>
+                    <div class="members">+ calcularArea()*</div>
+                </div>
+
+                <!-- INTERFACES -->
+                <div class="class-card interface">
+                    <div class="card-header"><h3>INadador</h3> <span class="type-tag">INTERFACE</span></div>
+                    <div class="section-label">Contrato</div>
+                    <div class="members">
+                        void nadar();<br>
+                        void nadar(distancia);<br>
+                        void nadar(dist, estilo);
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="secuencia" class="content">
+            <div class="seq-container">
+                <div class="timeline">
+                    <div class="event">
+                        Inicia ejecución en <b>Principal.main()</b>.
+                    </div>
+                    <div class="event">
+                        Se instancia <code>new Coche("Toyota", ...)</code>. El constructor llama a <code>super()</code> de <b>Vehiculo</b>.
+                    </div>
+                    <div class="event">
+                        Se ejecuta <code>miCoche.arrancar()</code>. Se invoca el código del padre y luego el del hijo.
+                    </div>
+                    <div class="event">
+                        Demostración de <b>Polimorfismo</b>: <code>Animal miPerro = new Perro("Firulais")</code>.
+                    </div>
+                    <div class="event">
+                        Llamada a <code>miPerro.hacerSonido()</code>. Se resuelve dinámicamente a la versión de <b>Perro</b>.
+                    </div>
+                    <div class="event">
+                        <b>Casting Seguro</b>: Se verifica <code>instanceof Perro</code> antes de llamar a <code>ladrarFuerte()</code>.
+                    </div>
+                    <div class="event">
+                        Invocación de interfaces en <b>Pato</b>: <code>pato.volar()</code> y <code>pato.nadar()</code>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(id) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

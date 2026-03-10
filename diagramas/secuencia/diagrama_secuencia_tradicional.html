@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagrama de Secuencia Tradicional - Herencia_POO</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { color: #333; margin-bottom: 40px; }
+
+        .canvas {
+            position: relative;
+            width: 1000px;
+            height: 1200px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* UML Sequence Components */
+        .lifeline {
+            position: absolute;
+            top: 50px;
+            bottom: 50px;
+            width: 2px;
+            border-left: 2px dashed #000;
+            z-index: 0;
+        }
+
+        .actor-box {
+            position: absolute;
+            top: 10px;
+            width: 120px;
+            height: 40px;
+            border: 1.5px solid #000;
+            background: #fffbe6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .execution-spec {
+            position: absolute;
+            width: 15px;
+            background: #fff;
+            border: 1.5px solid #000;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        /* Messages */
+        .message {
+            position: absolute;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .arrow {
+            position: absolute;
+            height: 2px;
+            background: #000;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid #000;
+        }
+
+        .return-arrow {
+            position: absolute;
+            height: 2px;
+            border-top: 2px dashed #000;
+        }
+
+        .return-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -5px;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 10px solid #000;
+            transform: scaleX(-1);
+            left: 0;
+        }
+
+        .msg-text {
+            position: absolute;
+            top: -18px;
+            width: 100%;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* Locations */
+        .col-user { left: 150px; }
+        .col-main { left: 400px; }
+        .col-coche { left: 650px; }
+        .col-perro { left: 850px; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Diagrama de Secuencia UML (Tradicional)</h1>
+
+    <div class="canvas">
+        <!-- Life lines -->
+        <div class="lifeline col-user"></div>
+        <div class="lifeline col-main"></div>
+        <div class="lifeline col-coche"></div>
+        <div class="lifeline col-perro"></div>
+
+        <!-- Actor boxes -->
+        <div class="actor-box col-user">Usuario</div>
+        <div class="actor-box col-main">Principal</div>
+        <div class="actor-box col-coche">Coche</div>
+        <div class="actor-box col-perro">Perro</div>
+
+        <!-- Executions -->
+        <div class="execution-spec col-main" style="top: 80px; height: 1050px;"></div>
+        <div class="execution-spec col-coche" style="top: 150px; height: 150px;"></div>
+        <div class="execution-spec col-perro" style="top: 400px; height: 150px;"></div>
+
+        <!-- Messages -->
+        <!-- User -> Main -->
+        <div class="message" style="top: 100px; left: 150px; width: 250px;">
+            <div class="msg-text">ejecutar main()</div>
+            <div class="arrow" style="width: 100%;"></div>
+        </div>
+
+        <!-- Main -> Coche -->
+        <div class="message" style="top: 150px; left: 400px; width: 250px;">
+            <div class="msg-text">new Coche(...)</div>
+            <div class="arrow" style="width: 100%;"></div>
+        </div>
+
+        <div class="message" style="top: 200px; left: 400px; width: 250px;">
+            <div class="msg-text">arrancar()</div>
+            <div class="arrow" style="width: 100%;"></div>
+        </div>
+
+        <!-- Coche -> Main (Return) -->
+        <div class="message" style="top: 280px; left: 400px; width: 250px;">
+            <div class="msg-text">void</div>
+            <div class="return-arrow" style="width: 100%;"></div>
+        </div>
+
+        <!-- Main -> Perro -->
+        <div class="message" style="top: 400px; left: 400px; width: 450px;">
+            <div class="msg-text">new Perro("Firulais")</div>
+            <div class="arrow" style="width: 100%;"></div>
+        </div>
+
+        <div class="message" style="top: 450px; left: 400px; width: 450px;">
+            <div class="msg-text">hacerSonido()</div>
+            <div class="arrow" style="width: 100%;"></div>
+        </div>
+
+        <!-- Perro -> Main (Return) -->
+        <div class="message" style="top: 530px; left: 400px; width: 450px;">
+            <div class="msg-text">void</div>
+            <div class="return-arrow" style="width: 100%;"></div>
+        </div>
+
+        <!-- Note about polymorphism -->
+        <div style="position:absolute; top: 600px; left: 450px; border: 1px solid #aaa; background: #ffffde; padding: 10px; font-size: 11px; width: 200px;">
+            <b>Nota:</b> El flujo continúa con casting dinámico e invocación de interfaces (Pato).
+        </div>
+
+        <!-- Main -> User (End) -->
+        <div class="message" style="top: 1100px; left: 150px; width: 250px;">
+            <div class="msg-text">fin ejecución</div>
+            <div class="return-arrow" style="width: 100%;"></div>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 20px; font-size: 13px; color: #666; max-width: 800px; text-align: center;">
+        Este diagrama sigue la notación UML estándar: líneas de vida punteadas, barras de activación (execution specifications) y mensajes sincrónicos (flechas sólidas) con retornos (flechas punteadas).
+    </div>
+
+</body>
+</html>
